@@ -137,6 +137,20 @@
   }
   .section-copy { margin: 0; color: var(--muted); font-size: 14.5px; line-height: 1.55; }
   .section-intro { margin-bottom: 23px; }
+  .plain-explainer {
+    margin: 0 0 22px;
+    padding: 15px 16px;
+    border: 1px solid #ead9aa;
+    border-radius: 11px;
+    background: var(--accent-soft);
+  }
+  .plain-explainer strong {
+    display: block;
+    margin-bottom: 4px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+  }
+  .plain-explainer p { margin: 0; color: #5d5543; font-size: 13.5px; line-height: 1.5; }
 
   .progress { display: flex; gap: 6px; margin-bottom: 19px; }
   .dot { height: 4px; flex: 1; border-radius: 999px; background: var(--line); }
@@ -207,6 +221,19 @@
   .btn:hover { filter: brightness(.98); }
 
   .field-label { display: block; margin-bottom: 8px; font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 600; }
+  .field-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+  .field-heading .field-label { margin: 0; }
+  .sample-button {
+    padding: 6px 10px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--card);
+    color: var(--accent-dark);
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .sample-button:hover { border-color: var(--accent); background: var(--accent-soft); }
   textarea {
     width: 100%;
     min-height: 210px;
@@ -306,11 +333,19 @@
     <div class="card preflight-card">
       <div class="section-intro">
         <div class="section-kicker">Evidence &amp; Safety Preflight</div>
-        <h2 class="section-heading">Check the signals before you publish.</h2>
-        <p class="section-copy">Six explainable checks surface claims and structural opportunities for a human editor. This is a preflight, not medical verification or editorial approval.</p>
+        <h2 class="section-heading">Check an article draft before it goes live.</h2>
+        <p class="section-copy">This mode is for the site’s writers and editors—not regular readers.</p>
       </div>
 
-      <label class="field-label" for="draft-text">Draft article text</label>
+      <div class="plain-explainer">
+        <strong>Think of it as spell-check for evidence and safety warnings.</strong>
+        <p>Paste an article draft, run the check, then review any highlighted claims. The tool suggests what deserves attention; a human editor makes every decision.</p>
+      </div>
+
+      <div class="field-heading">
+        <label class="field-label" for="draft-text">1. Paste an article draft</label>
+        <button class="sample-button" id="load-sample" type="button">Try a sample</button>
+      </div>
       <textarea id="draft-text" placeholder="Paste draft article text here…" spellcheck="true"></textarea>
       <div class="composer-meta">
         <span>Plain text only</span>
@@ -318,14 +353,14 @@
       </div>
       <div class="run-row">
         <span class="local-note">Your draft stays on this device and is never uploaded.</span>
-        <button class="run-button" id="run-preflight" type="button" disabled>Run Preflight</button>
+        <button class="run-button" id="run-preflight" type="button" disabled>2. Run the check</button>
       </div>
 
       <div class="results" id="results-panel" tabindex="-1" aria-live="polite">
         <div class="results-header">
           <div>
-            <h3 class="summary-title">Ready when your draft is.</h3>
-            <p class="summary-copy">The check reports matched text, the exact rule, and a suggested revision.</p>
+            <h3 class="summary-title">3. Review the highlighted warnings.</h3>
+            <p class="summary-copy">Each result explains what was matched and what an editor should check next.</p>
           </div>
           <div class="trace">6 rules · browser-local</div>
         </div>
@@ -511,6 +546,7 @@ tabs.forEach((tab) => {
 
 const draftText = document.getElementById("draft-text");
 const runButton = document.getElementById("run-preflight");
+const sampleButton = document.getElementById("load-sample");
 const characterCount = document.getElementById("character-count");
 const findingsList = document.getElementById("findings-list");
 const resultsPanel = document.getElementById("results-panel");
@@ -519,6 +555,12 @@ draftText.addEventListener("input", () => {
   const length = draftText.value.length;
   characterCount.textContent = `${length.toLocaleString()} ${length === 1 ? "character" : "characters"}`;
   runButton.disabled = !draftText.value.trim();
+});
+
+sampleButton.addEventListener("click", () => {
+  draftText.value = "This treatment reduces redness by 60% in just 3 days.\n\nMany users report taking testosterone boosters for faster gains.";
+  draftText.dispatchEvent(new Event("input", { bubbles: true }));
+  draftText.focus();
 });
 
 function createFindingCard(item) {
