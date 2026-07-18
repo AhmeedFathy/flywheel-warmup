@@ -4,20 +4,28 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Start Here: Pillar Router</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Dosis:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+  /* Palette/type sampled from the live looksmaxxing.guide (computed styles + screenshot,
+     2026-07): near-black hero, warm cream content sections, single gold/amber accent,
+     Space Grotesk for headings + Dosis for body. Reused here as design tokens only --
+     no copied imagery, logo, or copy. */
   :root {
-    --bg: #f7f6f3;
+    --bg: #f7f6f2;
     --card: #ffffff;
-    --ink: #1c1c1e;
+    --ink: #17171a;
     --muted: #6b6b6f;
-    --line: #e4e2dc;
-    --accent: #2f4f4f;
-    --accent-soft: #eef2f1;
+    --line: #e6e3da;
+    --accent: #d19c14;
+    --accent-dark: #a67c0f;
+    --accent-soft: #faf1dc;
   }
   * { box-sizing: border-box; }
   body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: 'Dosis', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     background: var(--bg);
     color: var(--ink);
     display: flex;
@@ -26,7 +34,10 @@
   }
   .wrap { width: 100%; max-width: 560px; }
   header { margin-bottom: 28px; text-align: center; }
-  header h1 { font-size: 22px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  header h1 {
+    font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+    font-size: 24px; margin: 0 0 6px; letter-spacing: -0.01em;
+  }
   header p { margin: 0; color: var(--muted); font-size: 14.5px; line-height: 1.5; }
 
   .card {
@@ -37,22 +48,43 @@
     box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   }
 
-  .step-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 8px; }
-  .question { font-size: 18px; font-weight: 600; margin: 0 0 18px; line-height: 1.35; }
+  .step-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 8px; font-weight: 600; }
+  .question {
+    font-family: 'Space Grotesk', sans-serif; font-weight: 600;
+    font-size: 19px; margin: 0 0 18px; line-height: 1.35;
+  }
 
   .options { display: flex; flex-direction: column; gap: 9px; }
   .opt {
     text-align: left;
     padding: 13px 16px;
     border-radius: 10px;
-    border: 1px solid var(--line);
+    border: 1.5px solid var(--line);
     background: #fff;
     cursor: pointer;
-    font-size: 14.5px;
+    font-family: 'Dosis', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
     color: var(--ink);
     transition: border-color .15s, background .15s;
   }
   .opt:hover { border-color: var(--accent); background: var(--accent-soft); }
+
+  /* pillar grid -- mirrors the real site's pill-tab nav (gold-filled = active) */
+  .pillar-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pillar-pill {
+    padding: 10px 15px;
+    border-radius: 22px;
+    border: 1.5px solid var(--line);
+    background: #fff;
+    cursor: pointer;
+    font-family: 'Dosis', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    transition: all .15s;
+  }
+  .pillar-pill:hover { border-color: var(--accent); background: var(--accent-soft); }
 
   .progress { display: flex; gap: 5px; margin-bottom: 18px; }
   .dot { height: 4px; flex: 1; border-radius: 2px; background: var(--line); }
@@ -65,25 +97,29 @@
 
   /* result card */
   .result-tag {
-    display: inline-block; font-size: 12px; font-weight: 600; letter-spacing: 0.03em;
-    color: var(--accent); background: var(--accent-soft); padding: 5px 10px; border-radius: 20px;
-    margin-bottom: 12px;
+    display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: 0.05em;
+    text-transform: uppercase; color: var(--accent-dark); background: var(--accent-soft);
+    padding: 5px 12px; border-radius: 20px; margin-bottom: 12px;
   }
-  .result-title { font-size: 22px; font-weight: 700; margin: 0 0 8px; }
-  .rationale { font-size: 14.5px; color: var(--muted); line-height: 1.55; margin: 0 0 20px; }
+  .result-title {
+    font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+    font-size: 26px; margin: 0 0 8px; color: var(--ink);
+  }
+  .rationale { font-size: 15px; color: var(--muted); line-height: 1.55; margin: 0 0 20px; }
   .action-block { margin-bottom: 14px; }
-  .action-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); margin-bottom: 4px; }
-  .action-text { font-size: 15px; line-height: 1.5; margin: 0; }
+  .action-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent-dark); margin-bottom: 4px; }
+  .action-text { font-size: 15.5px; line-height: 1.5; margin: 0; }
   .note {
-    font-size: 13px; color: var(--muted); background: var(--accent-soft);
+    font-size: 13.5px; color: var(--muted); background: var(--accent-soft);
     border-radius: 8px; padding: 10px 12px; margin: 18px 0;
   }
   .buttons { display: flex; gap: 10px; margin-top: 20px; }
   .btn {
-    flex: 1; padding: 12px 14px; border-radius: 9px; font-size: 14px; font-weight: 600;
-    text-align: center; cursor: pointer; border: 1px solid var(--line);
+    flex: 1; padding: 12px 14px; border-radius: 9px; font-size: 14.5px; font-weight: 600;
+    font-family: 'Dosis', sans-serif;
+    text-align: center; cursor: pointer; border: 1.5px solid var(--line);
   }
-  .btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .btn.primary { background: var(--accent); color: #17171a; border-color: var(--accent); }
   .btn.secondary { background: #fff; color: var(--ink); }
   .privacy { text-align: center; font-size: 12px; color: var(--muted); margin-top: 20px; }
 </style>
@@ -100,7 +136,7 @@
 <script>
 const PILLARS = {
   looks: {
-    name: "Looks", color: "#2f4f4f",
+    name: "Looks",
     rationale: "You want to see a visible difference in how you look this month, so Looks is the clearest starting point.",
     actions: {
       unsure: ["Book a basic skin-type assessment or dermatologist consult to know your baseline.", "Build a simple two-step morning and evening skincare routine."],
@@ -110,7 +146,7 @@ const PILLARS = {
     }
   },
   fitness: {
-    name: "Fitness", color: "#3a5a40",
+    name: "Fitness",
     rationale: "You want a visible physical improvement in the next month, so Fitness is the clearest starting point.",
     actions: {
       unsure: ["Pick one simple, repeatable routine — a basic bodyweight circuit or a 20-minute walk — rather than researching the 'optimal' plan.", "Track it for a week before changing anything."],
@@ -120,7 +156,7 @@ const PILLARS = {
     }
   },
   style: {
-    name: "Style", color: "#7c6a46",
+    name: "Style",
     rationale: "You want to look and feel more put-together day to day, so Style is the clearest starting point.",
     actions: {
       unsure: ["Identify three outfits you already own that fit well and feel good, and wear those on repeat.", "Note what's missing only after a week of wearing what already works."],
@@ -130,7 +166,7 @@ const PILLARS = {
     }
   },
   money: {
-    name: "Money", color: "#4a5859",
+    name: "Money",
     rationale: "You want to improve your income or financial position, so Money is the clearest starting point.",
     actions: {
       unsure: ["Write down your actual monthly income and expenses — most people skip this step.", "Identify the single largest avoidable expense."],
@@ -140,7 +176,7 @@ const PILLARS = {
     }
   },
   dating: {
-    name: "Dating", color: "#7a4b4b",
+    name: "Dating",
     rationale: "You want better dating results, so Dating is the clearest starting point.",
     actions: {
       unsure: ["Update your existing profile photos and bio with what you already have — no new content needed.", "Ask one trusted friend for honest feedback on it."],
@@ -150,7 +186,7 @@ const PILLARS = {
     }
   },
   mindset: {
-    name: "Mindset", color: "#4b5d7a",
+    name: "Mindset",
     rationale: "You want to build discipline or confidence, so Mindset is the clearest starting point.",
     actions: {
       unsure: ["Write down one specific habit you want to build, not a vague goal like 'be more confident.'", "Track just that one habit daily for a week."],
@@ -160,7 +196,7 @@ const PILLARS = {
     }
   },
   masculinity: {
-    name: "Masculinity", color: "#5a4a6a",
+    name: "Masculinity",
     rationale: "You want to feel more grounded and responsible in how you show up, so this is the clearest starting point.",
     actions: {
       unsure: ["Practice one honest, values-based conversation this week — with a friend, family member, or partner.", "Notice what felt hardest about it and why."],
@@ -170,7 +206,7 @@ const PILLARS = {
     }
   },
   creativity: {
-    name: "Creativity / Gaming / AI", color: "#3f6b6b",
+    name: "Creativity / Gaming / AI",
     rationale: "You want to make, play, or build something, so this is the clearest starting point.",
     actions: {
       unsure: ["Pick one small project you can finish in a single sitting, not an ambitious long-term one.", "Finish it before starting anything bigger."],
@@ -180,7 +216,7 @@ const PILLARS = {
     }
   },
   charisma: {
-    name: "Charisma", color: "#6a5a3f",
+    name: "Charisma",
     rationale: "You want to communicate better and connect with people, so Charisma is the clearest starting point.",
     actions: {
       unsure: ["In your next conversation, focus only on asking one genuine follow-up question.", "Notice how the conversation changes when you do."],
@@ -230,11 +266,11 @@ function renderQ1() {
     ${progressBar(1)}
     <div class="step-label">Step 1 of 3</div>
     <div class="question">What would make the biggest difference in the next 30 days?</div>
-    <div class="options">
-      ${Q1_OPTIONS.map(([key, label]) => `<button class="opt" data-key="${key}">${label}</button>`).join('')}
+    <div class="pillar-grid">
+      ${Q1_OPTIONS.map(([key, label]) => `<button class="pillar-pill" data-key="${key}" title="${label}">${PILLARS[key].name}</button>`).join('')}
     </div>
   `;
-  app.querySelectorAll('.opt').forEach(btn => {
+  app.querySelectorAll('.pillar-pill').forEach(btn => {
     btn.onclick = () => { state.pillar = btn.dataset.key; renderQ2(); };
   });
 }
@@ -281,8 +317,8 @@ function renderResult() {
   const p = PILLARS[state.pillar];
   const [first, then] = p.actions[state.blocker];
   app.innerHTML = `
-    <div class="result-tag" style="color:${p.color}; background:${p.color}18;">Start with</div>
-    <h2 class="result-title" style="color:${p.color};">${p.name}</h2>
+    <div class="result-tag">Start with</div>
+    <h2 class="result-title">${p.name}</h2>
     <p class="rationale">${p.rationale}</p>
 
     <div class="action-block">
