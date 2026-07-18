@@ -3,136 +3,339 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Start Here: Pillar Router</title>
+<meta name="description" content="A reader and editorial starter toolkit for looksmaxxing.guide: find the right content pillar and preflight draft claims before review.">
+<meta name="theme-color" content="#f7f6f2">
+<meta property="og:type" content="website">
+<meta property="og:title" content="A careful place to start.">
+<meta property="og:description" content="Reader guidance and an explainable editorial evidence preflight for looksmaxxing.guide.">
+<meta property="og:image" content="https://ahmeedfathy.github.io/flywheel-warmup/og.png">
+<meta property="og:image:width" content="1536">
+<meta property="og:image:height" content="1024">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="A careful place to start.">
+<meta name="twitter:description" content="Reader guidance and an explainable editorial evidence preflight for looksmaxxing.guide.">
+<meta name="twitter:image" content="https://ahmeedfathy.github.io/flywheel-warmup/og.png">
+<title>Starter Toolkit · looksmaxxing.guide</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Dosis:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Dosis:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  /* Palette/type sampled from the live looksmaxxing.guide (computed styles + screenshot,
-     2026-07): near-black hero, warm cream content sections, single gold/amber accent,
-     Space Grotesk for headings + Dosis for body. Reused here as design tokens only --
-     no copied imagery, logo, or copy. */
   :root {
     --bg: #f7f6f2;
     --card: #ffffff;
     --ink: #17171a;
-    --muted: #6b6b6f;
-    --line: #e6e3da;
+    --muted: #68686d;
+    --line: #e4e1d7;
     --accent: #d19c14;
-    --accent-dark: #a67c0f;
+    --accent-dark: #8a6608;
     --accent-soft: #faf1dc;
+    --high: #a43e2d;
+    --high-soft: #fff0ec;
+    --medium: #8a6608;
+    --medium-soft: #fff8e8;
+    --low: #4f625d;
+    --low-soft: #f0f5f3;
+    --shadow: 0 14px 38px rgba(23, 23, 26, 0.06), 0 1px 3px rgba(23, 23, 26, 0.04);
   }
+
   * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+
   body {
     margin: 0;
+    min-height: 100vh;
     font-family: 'Dosis', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: var(--bg);
+    background:
+      radial-gradient(circle at 50% -20%, rgba(209, 156, 20, 0.10), transparent 34rem),
+      var(--bg);
     color: var(--ink);
-    display: flex;
-    justify-content: center;
-    padding: 40px 16px;
+    padding: 42px 16px 64px;
   }
-  .wrap { width: 100%; max-width: 560px; }
-  header { margin-bottom: 28px; text-align: center; }
-  header h1 {
-    font-family: 'Space Grotesk', sans-serif; font-weight: 700;
-    font-size: 24px; margin: 0 0 6px; letter-spacing: -0.01em;
+
+  button, textarea { font: inherit; }
+  button:focus-visible, textarea:focus-visible {
+    outline: 3px solid rgba(209, 156, 20, 0.34);
+    outline-offset: 2px;
   }
-  header p { margin: 0; color: var(--muted); font-size: 14.5px; line-height: 1.5; }
+
+  .shell { width: 100%; max-width: 900px; margin: 0 auto; }
+  .site-header { text-align: center; margin-bottom: 24px; }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 11px;
+    color: var(--accent-dark);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .brand-dot { width: 7px; height: 7px; border-radius: 999px; background: var(--accent); }
+  h1 {
+    margin: 0 0 8px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(26px, 5vw, 38px);
+    line-height: 1.12;
+    letter-spacing: -0.035em;
+  }
+  .site-header p { max-width: 620px; margin: 0 auto; color: var(--muted); font-size: 16px; line-height: 1.55; }
+
+  .mode-tabs {
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 auto 18px;
+    padding: 5px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+    border: 1px solid var(--line);
+    border-radius: 13px;
+    background: rgba(255,255,255,0.72);
+  }
+  .mode-tab {
+    min-width: 190px;
+    border: 0;
+    border-radius: 9px;
+    padding: 10px 18px;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    font-weight: 700;
+    transition: background .16s, color .16s, box-shadow .16s;
+  }
+  .mode-tab[aria-selected="true"] {
+    background: var(--card);
+    color: var(--ink);
+    box-shadow: 0 2px 9px rgba(23, 23, 26, 0.08);
+  }
+  .mode-tab .audience { display: block; margin-top: 1px; font-size: 11px; font-weight: 600; color: var(--muted); }
 
   .card {
     background: var(--card);
     border: 1px solid var(--line);
-    border-radius: 14px;
-    padding: 28px 26px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    border-radius: 17px;
+    box-shadow: var(--shadow);
   }
+  .router-card { max-width: 610px; margin: 0 auto; padding: 30px 28px; }
+  .preflight-card { padding: 30px; }
 
-  .step-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 8px; font-weight: 600; }
-  .question {
-    font-family: 'Space Grotesk', sans-serif; font-weight: 600;
-    font-size: 19px; margin: 0 0 18px; line-height: 1.35;
+  .section-kicker, .step-label, .action-label {
+    color: var(--accent-dark);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
   }
-
-  .options { display: flex; flex-direction: column; gap: 9px; }
-  .opt {
-    text-align: left;
-    padding: 13px 16px;
-    border-radius: 10px;
-    border: 1.5px solid var(--line);
-    background: #fff;
-    cursor: pointer;
-    font-family: 'Dosis', sans-serif;
-    font-size: 15px;
-    font-weight: 500;
-    color: var(--ink);
-    transition: border-color .15s, background .15s;
+  .section-heading {
+    margin: 5px 0 7px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 23px;
+    letter-spacing: -0.02em;
   }
-  .opt:hover { border-color: var(--accent); background: var(--accent-soft); }
+  .section-copy { margin: 0; color: var(--muted); font-size: 14.5px; line-height: 1.55; }
+  .section-intro { margin-bottom: 23px; }
 
-  /* pillar grid -- mirrors the real site's pill-tab nav (gold-filled = active) */
-  .pillar-grid { display: flex; flex-wrap: wrap; gap: 8px; }
-  .pillar-pill {
-    padding: 10px 15px;
-    border-radius: 22px;
-    border: 1.5px solid var(--line);
-    background: #fff;
-    cursor: pointer;
-    font-family: 'Dosis', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--ink);
-    transition: all .15s;
-  }
-  .pillar-pill:hover { border-color: var(--accent); background: var(--accent-soft); }
-
-  .progress { display: flex; gap: 5px; margin-bottom: 18px; }
-  .dot { height: 4px; flex: 1; border-radius: 2px; background: var(--line); }
+  .progress { display: flex; gap: 6px; margin-bottom: 19px; }
+  .dot { height: 4px; flex: 1; border-radius: 999px; background: var(--line); }
   .dot.done { background: var(--accent); }
-
-  .back-link {
-    display: inline-block; margin-top: 16px; font-size: 13px; color: var(--muted);
-    cursor: pointer; text-decoration: underline;
+  .step-label { color: var(--muted); margin-bottom: 8px; }
+  .question {
+    margin: 0 0 19px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+  .options { display: flex; flex-direction: column; gap: 9px; }
+  .opt, .pillar-pill {
+    border: 1.5px solid var(--line);
+    background: var(--card);
+    color: var(--ink);
+    cursor: pointer;
+    font-weight: 600;
+    transition: border-color .15s, background .15s, transform .15s;
+  }
+  .opt:hover, .pillar-pill:hover { border-color: var(--accent); background: var(--accent-soft); transform: translateY(-1px); }
+  .opt { padding: 13px 16px; border-radius: 10px; text-align: left; font-size: 15px; }
+  .pillar-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pillar-pill { padding: 10px 15px; border-radius: 999px; font-size: 14px; }
+  .back-button {
+    margin-top: 16px;
+    padding: 4px 0;
+    border: 0;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 13px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
 
-  /* result card */
   .result-tag {
-    display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: 0.05em;
-    text-transform: uppercase; color: var(--accent-dark); background: var(--accent-soft);
-    padding: 5px 12px; border-radius: 20px; margin-bottom: 12px;
+    display: inline-block;
+    margin-bottom: 12px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent-dark);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
   }
-  .result-title {
-    font-family: 'Space Grotesk', sans-serif; font-weight: 700;
-    font-size: 26px; margin: 0 0 8px; color: var(--ink);
-  }
-  .rationale { font-size: 15px; color: var(--muted); line-height: 1.55; margin: 0 0 20px; }
-  .action-block { margin-bottom: 14px; }
-  .action-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent-dark); margin-bottom: 4px; }
-  .action-text { font-size: 15.5px; line-height: 1.5; margin: 0; }
-  .note {
-    font-size: 13.5px; color: var(--muted); background: var(--accent-soft);
-    border-radius: 8px; padding: 10px 12px; margin: 18px 0;
-  }
+  .result-title { margin: 0 0 8px; font-family: 'Space Grotesk', sans-serif; font-size: 27px; letter-spacing: -0.02em; }
+  .rationale { margin: 0 0 21px; color: var(--muted); font-size: 15px; line-height: 1.55; }
+  .action-block { margin-bottom: 15px; }
+  .action-label { margin-bottom: 4px; }
+  .action-text { margin: 0; font-size: 15.5px; line-height: 1.5; }
+  .note { margin: 18px 0; padding: 11px 13px; border-radius: 9px; background: var(--accent-soft); color: var(--muted); font-size: 13.5px; line-height: 1.45; }
   .buttons { display: flex; gap: 10px; margin-top: 20px; }
   .btn {
-    flex: 1; padding: 12px 14px; border-radius: 9px; font-size: 14.5px; font-weight: 600;
-    font-family: 'Dosis', sans-serif;
-    text-align: center; cursor: pointer; border: 1.5px solid var(--line);
+    flex: 1;
+    padding: 12px 14px;
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    background: var(--card);
+    color: var(--ink);
+    cursor: pointer;
+    font-weight: 700;
   }
-  .btn.primary { background: var(--accent); color: #17171a; border-color: var(--accent); }
-  .btn.secondary { background: #fff; color: var(--ink); }
-  .privacy { text-align: center; font-size: 12px; color: var(--muted); margin-top: 20px; }
+  .btn.primary { border-color: var(--accent); background: var(--accent); }
+  .btn:hover { filter: brightness(.98); }
+
+  .field-label { display: block; margin-bottom: 8px; font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 600; }
+  textarea {
+    width: 100%;
+    min-height: 210px;
+    resize: vertical;
+    border: 1.5px solid var(--line);
+    border-radius: 12px;
+    padding: 15px 16px;
+    background: #fffefa;
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.55;
+  }
+  textarea::placeholder { color: #949398; }
+  .composer-meta { display: flex; justify-content: space-between; gap: 12px; margin-top: 8px; color: var(--muted); font-size: 12px; }
+  .run-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 17px; }
+  .run-button {
+    min-width: 150px;
+    border: 1px solid var(--accent);
+    border-radius: 10px;
+    padding: 12px 19px;
+    background: var(--accent);
+    color: var(--ink);
+    cursor: pointer;
+    font-weight: 700;
+  }
+  .run-button:disabled { cursor: not-allowed; opacity: .48; }
+  .local-note { color: var(--muted); font-size: 12.5px; line-height: 1.4; }
+
+  .results { margin-top: 25px; padding-top: 24px; border-top: 1px solid var(--line); }
+  .results-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; margin-bottom: 15px; }
+  .summary-title { margin: 0 0 4px; font-family: 'Space Grotesk', sans-serif; font-size: 19px; }
+  .summary-copy { margin: 0; color: var(--muted); font-size: 13.5px; }
+  .trace { flex: 0 0 auto; padding: 7px 10px; border-radius: 999px; background: #f3f2ed; color: var(--muted); font-size: 11.5px; font-weight: 700; }
+  .findings { display: grid; gap: 11px; }
+  .finding { border: 1px solid var(--line); border-left-width: 4px; border-radius: 11px; padding: 15px 16px; background: #fff; }
+  .finding.high { border-left-color: var(--high); }
+  .finding.medium { border-left-color: var(--medium); }
+  .finding.low { border-left-color: var(--low); }
+  .finding-top { display: flex; align-items: center; flex-wrap: wrap; gap: 7px; margin-bottom: 9px; }
+  .rule-id { font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 700; }
+  .rule-title { font-size: 14px; font-weight: 700; }
+  .badge { margin-left: auto; padding: 4px 8px; border-radius: 999px; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
+  .badge.high { color: var(--high); background: var(--high-soft); }
+  .badge.medium { color: var(--medium); background: var(--medium-soft); }
+  .badge.low { color: var(--low); background: var(--low-soft); }
+  .kind { color: var(--muted); font-size: 11px; }
+  .quote { margin: 0 0 9px; padding-left: 10px; border-left: 2px solid var(--line); color: #444449; font-size: 13.5px; line-height: 1.45; }
+  .suggestion { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.45; }
+  .suggestion strong { color: var(--ink); }
+  .clean-state { padding: 20px; border: 1px solid #dce8e3; border-radius: 11px; background: #f4f8f6; }
+  .clean-state strong { display: block; margin-bottom: 4px; font-family: 'Space Grotesk', sans-serif; font-size: 15px; }
+  .clean-state p { margin: 0; color: var(--muted); font-size: 13.5px; line-height: 1.45; }
+
+  .privacy { margin-top: 19px; text-align: center; color: var(--muted); font-size: 12px; }
+  .method-note { max-width: 720px; margin: 18px auto 0; text-align: center; color: var(--muted); font-size: 12px; line-height: 1.45; }
+
+  @media (max-width: 650px) {
+    body { padding: 28px 12px 44px; }
+    .mode-tabs { width: 100%; }
+    .mode-tab { min-width: 0; padding: 9px 10px; }
+    .router-card, .preflight-card { padding: 23px 19px; border-radius: 14px; }
+    .run-row, .results-header { align-items: stretch; flex-direction: column; }
+    .run-button { width: 100%; }
+    .trace { width: fit-content; }
+    .buttons { flex-direction: column; }
+    .badge { margin-left: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+  }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <h1>Start Here: Pillar Router</h1>
-    <p>Choose where to start, not how you score. Three quick questions, one clear next step.</p>
+<main class="shell">
+  <header class="site-header">
+    <div class="brand"><span class="brand-dot" aria-hidden="true"></span>looksmaxxing.guide</div>
+    <h1>A careful place to start.</h1>
+    <p>Find the right next step as a reader, or check a draft for evidence and safety signals before editorial review.</p>
   </header>
-  <div class="card" id="app"></div>
-</div>
 
+  <div class="mode-tabs" role="tablist" aria-label="Toolkit mode">
+    <button class="mode-tab" id="router-tab" type="button" role="tab" aria-selected="true" aria-controls="router-view" data-view="router">
+      Start Here<span class="audience">For readers</span>
+    </button>
+    <button class="mode-tab" id="preflight-tab" type="button" role="tab" aria-selected="false" aria-controls="preflight-view" data-view="preflight">
+      Preflight Check<span class="audience">For editors</span>
+    </button>
+  </div>
+
+  <section id="router-view" role="tabpanel" aria-labelledby="router-tab">
+    <div class="card router-card" id="router-app"></div>
+    <p class="privacy">Runs entirely in your browser. Nothing is saved or submitted.</p>
+  </section>
+
+  <section id="preflight-view" role="tabpanel" aria-labelledby="preflight-tab" hidden>
+    <div class="card preflight-card">
+      <div class="section-intro">
+        <div class="section-kicker">Evidence &amp; Safety Preflight</div>
+        <h2 class="section-heading">Check the signals before you publish.</h2>
+        <p class="section-copy">Six explainable checks surface claims and structural opportunities for a human editor. This is a preflight, not medical verification or editorial approval.</p>
+      </div>
+
+      <label class="field-label" for="draft-text">Draft article text</label>
+      <textarea id="draft-text" placeholder="Paste draft article text here…" spellcheck="true"></textarea>
+      <div class="composer-meta">
+        <span>Plain text only</span>
+        <span id="character-count">0 characters</span>
+      </div>
+      <div class="run-row">
+        <span class="local-note">Your draft stays on this device and is never uploaded.</span>
+        <button class="run-button" id="run-preflight" type="button" disabled>Run Preflight</button>
+      </div>
+
+      <div class="results" id="results-panel" tabindex="-1" aria-live="polite">
+        <div class="results-header">
+          <div>
+            <h3 class="summary-title">Ready when your draft is.</h3>
+            <p class="summary-copy">The check reports matched text, the exact rule, and a suggested revision.</p>
+          </div>
+          <div class="trace">6 rules · browser-local</div>
+        </div>
+        <div class="findings" id="findings-list"></div>
+      </div>
+    </div>
+    <p class="method-note">Pattern matches are intentionally conservative and explainable. A clean result means no configured pattern was detected—not that a claim is proven or risk-free.</p>
+  </section>
+</main>
+
+<script src="preflight.js"></script>
 <script>
 const PILLARS = {
   looks: {
@@ -142,26 +345,26 @@ const PILLARS = {
       unsure: ["Book a basic skin-type assessment or dermatologist consult to know your baseline.", "Build a simple two-step morning and evening skincare routine."],
       inconsistent: ["Pick one skincare step you already know works and do it every day for a week before adding more.", "Add a second step only once the first is automatic."],
       scattered: ["Choose skincare over grooming, style, or supplements for now, and set the rest aside.", "Revisit the other areas only after two consistent weeks here."],
-      constrained: ["Start with a basic cleanser and moisturizer — no new products needed to see improvement.", "Track how your skin responds before spending on anything else."]
+      constrained: ["Start with a basic cleanser and moisturizer—no new products needed to see improvement.", "Track how your skin responds before spending on anything else."]
     }
   },
   fitness: {
     name: "Fitness",
     rationale: "You want a visible physical improvement in the next month, so Fitness is the clearest starting point.",
     actions: {
-      unsure: ["Pick one simple, repeatable routine — a basic bodyweight circuit or a 20-minute walk — rather than researching the 'optimal' plan.", "Track it for a week before changing anything."],
+      unsure: ["Pick one simple, repeatable routine—a basic bodyweight circuit or a 20-minute walk—rather than researching the ‘optimal’ plan.", "Track it for a week before changing anything."],
       inconsistent: ["Commit to one fixed time of day for movement, even 15 minutes, and protect that slot.", "Add intensity only after two weeks of consistency."],
-      scattered: ["Drop any plan that needs equipment or a gym you don't already have access to.", "Add one new element only after the first is a habit."],
-      constrained: ["Use bodyweight exercises or walking — no membership or equipment required.", "Reassess in two weeks whether more structure is worth the cost."]
+      scattered: ["Drop any plan that needs equipment or a gym you do not already have access to.", "Add one new element only after the first is a habit."],
+      constrained: ["Use bodyweight exercises or walking—no membership or equipment required.", "Reassess in two weeks whether more structure is worth the cost."]
     }
   },
   style: {
     name: "Style",
     rationale: "You want to look and feel more put-together day to day, so Style is the clearest starting point.",
     actions: {
-      unsure: ["Identify three outfits you already own that fit well and feel good, and wear those on repeat.", "Note what's missing only after a week of wearing what already works."],
-      inconsistent: ["Lay out tomorrow's outfit the night before, just for one week.", "Use that week to notice what you reach for most."],
-      scattered: ["Focus only on fit — sizing and tailoring — before worrying about trends or color.", "Address other style questions after fit is solved."],
+      unsure: ["Identify three outfits you already own that fit well and feel good, and wear those on repeat.", "Note what is missing only after a week of wearing what already works."],
+      inconsistent: ["Lay out tomorrow’s outfit the night before, just for one week.", "Use that week to notice what you reach for most."],
+      scattered: ["Focus only on fit—sizing and tailoring—before worrying about trends or color.", "Address other style questions after fit is solved."],
       constrained: ["Get one well-fitting item tailored rather than buying anything new.", "Build outward from that one piece."]
     }
   },
@@ -169,9 +372,9 @@ const PILLARS = {
     name: "Money",
     rationale: "You want to improve your income or financial position, so Money is the clearest starting point.",
     actions: {
-      unsure: ["Write down your actual monthly income and expenses — most people skip this step.", "Identify the single largest avoidable expense."],
-      inconsistent: ["Set one automatic transfer to savings, even a small amount, so it doesn't rely on willpower.", "Increase it only once it's been automatic for two weeks."],
-      scattered: ["Pick one income or savings goal and set side projects aside until it's met.", "Revisit other ideas after that goal is hit."],
+      unsure: ["Write down your actual monthly income and expenses—most people skip this step.", "Identify the single largest avoidable expense."],
+      inconsistent: ["Set one automatic transfer to savings, even a small amount, so it does not rely on willpower.", "Increase it only once it has been automatic for two weeks."],
+      scattered: ["Pick one income or savings goal and set side projects aside until it is met.", "Revisit other ideas after that goal is hit."],
       constrained: ["Review one recurring subscription or expense you can cancel this week.", "Redirect that amount to savings automatically."]
     }
   },
@@ -179,30 +382,30 @@ const PILLARS = {
     name: "Dating",
     rationale: "You want better dating results, so Dating is the clearest starting point.",
     actions: {
-      unsure: ["Update your existing profile photos and bio with what you already have — no new content needed.", "Ask one trusted friend for honest feedback on it."],
-      inconsistent: ["Set a fixed weekly time to message or plan a date, so it isn't left to chance.", "Keep that single weekly slot for two weeks before adding more."],
+      unsure: ["Update your existing profile photos and bio with what you already have—no new content needed.", "Ask one trusted friend for honest feedback on it."],
+      inconsistent: ["Set a fixed weekly time to message or plan a date, so it is not left to chance.", "Keep that single weekly slot for two weeks before adding more."],
       scattered: ["Focus on one platform or context instead of several at once.", "Expand only once that one is working."],
-      constrained: ["Plan one low-cost date idea — a walk or coffee — you can suggest confidently.", "Use it as your default until you have more time."]
+      constrained: ["Plan one low-cost date idea—a walk or coffee—you can suggest confidently.", "Use it as your default until you have more time."]
     }
   },
   mindset: {
     name: "Mindset",
     rationale: "You want to build discipline or confidence, so Mindset is the clearest starting point.",
     actions: {
-      unsure: ["Write down one specific habit you want to build, not a vague goal like 'be more confident.'", "Track just that one habit daily for a week."],
+      unsure: ["Write down one specific habit you want to build, not a vague goal like ‘be more confident.’", "Track just that one habit daily for a week."],
       inconsistent: ["Attach the new habit to something you already do every day, like brushing your teeth.", "Only add a second habit once the first sticks."],
       scattered: ["Pick the single habit that would make the others easier, and start there.", "Let the rest wait."],
-      constrained: ["Use a two-minute daily journal or reflection — no app or course required.", "Extend the time only once it's automatic."]
+      constrained: ["Use a two-minute daily journal or reflection—no app or course required.", "Extend the time only once it is automatic."]
     }
   },
   masculinity: {
     name: "Masculinity",
     rationale: "You want to feel more grounded and responsible in how you show up, so this is the clearest starting point.",
     actions: {
-      unsure: ["Practice one honest, values-based conversation this week — with a friend, family member, or partner.", "Notice what felt hardest about it and why."],
+      unsure: ["Practice one honest, values-based conversation this week—with a friend, family member, or partner.", "Notice what felt hardest about it and why."],
       inconsistent: ["Pick one commitment you keep breaking to yourself, and keep it once, on purpose, this week.", "Repeat it before adding a second commitment."],
       scattered: ["Choose one relationship or responsibility to give real attention to this week.", "Let the others wait their turn."],
-      constrained: ["Spend 15 minutes writing down what 'being dependable' actually looks like to you.", "Pick one small way to act on it this week."]
+      constrained: ["Spend 15 minutes writing down what ‘being dependable’ actually looks like to you.", "Pick one small way to act on it this week."]
     }
   },
   creativity: {
@@ -212,7 +415,7 @@ const PILLARS = {
       unsure: ["Pick one small project you can finish in a single sitting, not an ambitious long-term one.", "Finish it before starting anything bigger."],
       inconsistent: ["Block one fixed short session this week for the project, and protect it.", "Repeat that block before adding more sessions."],
       scattered: ["Pause every other project and pick the one closest to done.", "Finish it before opening a new one."],
-      constrained: ["Use tools you already have access to — no new software or hardware needed to start.", "Decide what's actually missing only after you've started."]
+      constrained: ["Use tools you already have access to—no new software or hardware needed to start.", "Decide what is actually missing only after you have started."]
     }
   },
   charisma: {
@@ -220,9 +423,9 @@ const PILLARS = {
     rationale: "You want to communicate better and connect with people, so Charisma is the clearest starting point.",
     actions: {
       unsure: ["In your next conversation, focus only on asking one genuine follow-up question.", "Notice how the conversation changes when you do."],
-      inconsistent: ["Pick one small social habit — like making eye contact or remembering names — and practice it daily this week.", "Add a second habit only once the first feels natural."],
+      inconsistent: ["Pick one small social habit—like making eye contact or remembering names—and practice it daily this week.", "Add a second habit only once the first feels natural."],
       scattered: ["Focus on listening well in conversations before working on anything else.", "Build outward from that."],
-      constrained: ["Practice with people you already see regularly — no new events or classes needed.", "Expand your circle only once this feels comfortable."]
+      constrained: ["Practice with people you already see regularly—no new events or classes needed.", "Expand your circle only once this feels comfortable."]
     }
   }
 };
@@ -238,73 +441,46 @@ const Q1_OPTIONS = [
   ["creativity", "Make, play, or build something"],
   ["charisma", "Communicate better and connect with people"]
 ];
-
 const Q2_OPTIONS = [
-  ["unsure", "I don't know what to do"],
-  ["inconsistent", "I know what to do but don't stay consistent"],
-  ["scattered", "I'm trying too many things at once"],
+  ["unsure", "I don’t know what to do"],
+  ["inconsistent", "I know what to do but don’t stay consistent"],
+  ["scattered", "I’m trying too many things at once"],
   ["constrained", "I have limited time or money"]
 ];
-
 const Q3_OPTIONS = [
   ["15 minutes a day", "About 15 minutes a day"],
   ["an hour or so a week", "About an hour, once or twice this week"],
   ["several hours this week", "Several hours across the week"]
 ];
 
-let state = { pillar: null, blocker: null, time: null };
-const app = document.getElementById('app');
+let routerState = { pillar: null, blocker: null, time: null };
+const routerApp = document.getElementById("router-app");
 
 function progressBar(step) {
-  let html = '<div class="progress">';
-  for (let i = 1; i <= 3; i++) html += `<div class="dot ${i <= step ? 'done' : ''}"></div>`;
-  return html + '</div>';
+  return `<div class="progress" aria-label="Step ${step} of 3">${[1,2,3].map((item) => `<span class="dot ${item <= step ? "done" : ""}"></span>`).join("")}</div>`;
 }
 
 function renderQ1() {
-  app.innerHTML = `
-    ${progressBar(1)}
-    <div class="step-label">Step 1 of 3</div>
-    <div class="question">What would make the biggest difference in the next 30 days?</div>
-    <div class="pillar-grid">
-      ${Q1_OPTIONS.map(([key, label]) => `<button class="pillar-pill" data-key="${key}" title="${label}">${PILLARS[key].name}</button>`).join('')}
-    </div>
-  `;
-  app.querySelectorAll('.pillar-pill').forEach(btn => {
-    btn.onclick = () => { state.pillar = btn.dataset.key; renderQ2(); };
+  routerApp.innerHTML = `${progressBar(1)}<div class="step-label">Step 1 of 3</div><h2 class="question">What would make the biggest difference in the next 30 days?</h2><div class="pillar-grid">${Q1_OPTIONS.map(([key, label]) => `<button class="pillar-pill" type="button" data-key="${key}" title="${label}">${PILLARS[key].name}</button>`).join("")}</div>`;
+  routerApp.querySelectorAll(".pillar-pill").forEach((button) => {
+    button.addEventListener("click", () => { routerState.pillar = button.dataset.key; renderQ2(); });
   });
 }
 
 function renderQ2() {
-  app.innerHTML = `
-    ${progressBar(2)}
-    <div class="step-label">Step 2 of 3</div>
-    <div class="question">What's stopping you most right now?</div>
-    <div class="options">
-      ${Q2_OPTIONS.map(([key, label]) => `<button class="opt" data-key="${key}">${label}</button>`).join('')}
-    </div>
-    <span class="back-link" id="back">&larr; back</span>
-  `;
-  app.querySelectorAll('.opt').forEach(btn => {
-    btn.onclick = () => { state.blocker = btn.dataset.key; renderQ3(); };
+  routerApp.innerHTML = `${progressBar(2)}<div class="step-label">Step 2 of 3</div><h2 class="question">What’s stopping you most right now?</h2><div class="options">${Q2_OPTIONS.map(([key, label]) => `<button class="opt" type="button" data-key="${key}">${label}</button>`).join("")}</div><button class="back-button" type="button" id="router-back">← Back</button>`;
+  routerApp.querySelectorAll(".opt").forEach((button) => {
+    button.addEventListener("click", () => { routerState.blocker = button.dataset.key; renderQ3(); });
   });
-  document.getElementById('back').onclick = renderQ1;
+  document.getElementById("router-back").addEventListener("click", renderQ1);
 }
 
 function renderQ3() {
-  app.innerHTML = `
-    ${progressBar(3)}
-    <div class="step-label">Step 3 of 3</div>
-    <div class="question">How much can you realistically commit this week?</div>
-    <div class="options">
-      ${Q3_OPTIONS.map(([key, label]) => `<button class="opt" data-key="${key}">${label}</button>`).join('')}
-    </div>
-    <span class="back-link" id="back">&larr; back</span>
-  `;
-  app.querySelectorAll('.opt').forEach(btn => {
-    btn.onclick = () => { state.time = btn.dataset.key; renderResult(); };
+  routerApp.innerHTML = `${progressBar(3)}<div class="step-label">Step 3 of 3</div><h2 class="question">How much can you realistically commit this week?</h2><div class="options">${Q3_OPTIONS.map(([key, label]) => `<button class="opt" type="button" data-key="${key}">${label}</button>`).join("")}</div><button class="back-button" type="button" id="router-back">← Back</button>`;
+  routerApp.querySelectorAll(".opt").forEach((button) => {
+    button.addEventListener("click", () => { routerState.time = button.dataset.key; renderRouterResult(); });
   });
-  document.getElementById('back').onclick = renderQ2;
+  document.getElementById("router-back").addEventListener("click", renderQ2);
 }
 
 function timeClause(time) {
@@ -313,36 +489,98 @@ function timeClause(time) {
   return "Across a few sessions this week";
 }
 
-function renderResult() {
-  const p = PILLARS[state.pillar];
-  const [first, then] = p.actions[state.blocker];
-  app.innerHTML = `
-    <div class="result-tag">Start with</div>
-    <h2 class="result-title">${p.name}</h2>
-    <p class="rationale">${p.rationale}</p>
-
-    <div class="action-block">
-      <div class="action-label">Do this first</div>
-      <p class="action-text">${timeClause(state.time)}: ${first.charAt(0).toLowerCase() + first.slice(1)}</p>
-    </div>
-    <div class="action-block">
-      <div class="action-label">Then</div>
-      <p class="action-text">${then}</p>
-    </div>
-
-    <div class="note">Focus on this pillar for seven days before adding another. Switching goals early is the most common reason self-improvement plans stall.</div>
-
-    <div class="buttons">
-      <div class="btn secondary" id="retake">Retake</div>
-      <div class="btn primary" id="explore">Explore this pillar</div>
-    </div>
-    <div class="privacy">Runs entirely in your browser. Nothing is saved or submitted.</div>
-  `;
-  document.getElementById('retake').onclick = () => { state = { pillar: null, blocker: null, time: null }; renderQ1(); };
-  document.getElementById('explore').onclick = () => alert('In the real site, this would link to the ' + p.name + ' pillar page.');
+function renderRouterResult() {
+  const pillar = PILLARS[routerState.pillar];
+  const [first, then] = pillar.actions[routerState.blocker];
+  routerApp.innerHTML = `<div class="result-tag">Start with</div><h2 class="result-title">${pillar.name}</h2><p class="rationale">${pillar.rationale}</p><div class="action-block"><div class="action-label">Do this first</div><p class="action-text">${timeClause(routerState.time)}: ${first.charAt(0).toLowerCase() + first.slice(1)}</p></div><div class="action-block"><div class="action-label">Then</div><p class="action-text">${then}</p></div><div class="note">Focus on this pillar for seven days before adding another. Switching goals early is a common reason self-improvement plans stall.</div><div class="buttons"><button class="btn" type="button" id="retake">Retake</button><button class="btn primary" type="button" id="explore">Explore this pillar</button></div>`;
+  document.getElementById("retake").addEventListener("click", () => { routerState = { pillar: null, blocker: null, time: null }; renderQ1(); });
+  document.getElementById("explore").addEventListener("click", () => alert(`On the full site, this opens the ${pillar.name} pillar.`));
 }
 
+const tabs = document.querySelectorAll(".mode-tab");
+const views = { router: document.getElementById("router-view"), preflight: document.getElementById("preflight-view") };
+
+tabs.forEach((tab) => {
+  tab.addEventListener("click", () => {
+    tabs.forEach((item) => item.setAttribute("aria-selected", String(item === tab)));
+    Object.entries(views).forEach(([key, view]) => { view.hidden = key !== tab.dataset.view; });
+    history.replaceState(null, "", tab.dataset.view === "preflight" ? "#preflight" : location.pathname + location.search);
+  });
+});
+
+const draftText = document.getElementById("draft-text");
+const runButton = document.getElementById("run-preflight");
+const characterCount = document.getElementById("character-count");
+const findingsList = document.getElementById("findings-list");
+const resultsPanel = document.getElementById("results-panel");
+
+draftText.addEventListener("input", () => {
+  const length = draftText.value.length;
+  characterCount.textContent = `${length.toLocaleString()} ${length === 1 ? "character" : "characters"}`;
+  runButton.disabled = !draftText.value.trim();
+});
+
+function createFindingCard(item) {
+  const card = document.createElement("article");
+  card.className = `finding ${item.severity}`;
+
+  const top = document.createElement("div");
+  top.className = "finding-top";
+  const id = document.createElement("span");
+  id.className = "rule-id";
+  id.textContent = item.ruleId;
+  const title = document.createElement("span");
+  title.className = "rule-title";
+  title.textContent = item.rule;
+  const kind = document.createElement("span");
+  kind.className = "kind";
+  kind.textContent = item.kind;
+  const badge = document.createElement("span");
+  badge.className = `badge ${item.severity}`;
+  badge.textContent = item.severity;
+  top.append(id, title, kind, badge);
+
+  const quote = document.createElement("blockquote");
+  quote.className = "quote";
+  quote.textContent = `“${item.quote}”`;
+  const suggestion = document.createElement("p");
+  suggestion.className = "suggestion";
+  const strong = document.createElement("strong");
+  strong.textContent = "Suggested next step: ";
+  suggestion.append(strong, document.createTextNode(item.suggestion));
+
+  card.append(top, quote, suggestion);
+  return card;
+}
+
+runButton.addEventListener("click", () => {
+  const result = PreflightEngine.runPreflight(draftText.value);
+  const counts = result.findings.reduce((acc, item) => { acc[item.severity] += 1; return acc; }, { high: 0, medium: 0, low: 0 });
+  const title = resultsPanel.querySelector(".summary-title");
+  const copy = resultsPanel.querySelector(".summary-copy");
+  const trace = resultsPanel.querySelector(".trace");
+  findingsList.replaceChildren();
+
+  if (result.findings.length === 0) {
+    title.textContent = "No configured patterns detected.";
+    copy.textContent = "Continue with human editorial review before publication.";
+    const clean = document.createElement("div");
+    clean.className = "clean-state";
+    clean.innerHTML = "<strong>Preflight complete</strong><p>This result is not evidence that every claim is proven or that the draft is medically safe.</p>";
+    findingsList.append(clean);
+  } else {
+    title.textContent = `${result.findings.length} ${result.findings.length === 1 ? "signal" : "signals"} to review`;
+    copy.textContent = `${counts.high} high · ${counts.medium} medium · ${counts.low} low`;
+    result.findings.forEach((item) => findingsList.append(createFindingCard(item)));
+  }
+
+  trace.textContent = `${result.evaluatedRules} rules evaluated · browser-local`;
+  resultsPanel.focus({ preventScroll: true });
+  resultsPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+});
+
 renderQ1();
+if (location.hash === "#preflight") document.getElementById("preflight-tab").click();
 </script>
 </body>
 </html>
